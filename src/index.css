@@ -1,0 +1,24 @@
+
+.forms-container{
+  margin: 60px auto;
+  padding:   auto;
+    display: flex;
+    background-image: url("./assets/images/Coffee-3.jpg");
+      background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  flex-direction: column;
+  align-items: center;
+    border: 2px solid white;
+    border-radius: 10px;
+    background-color:  #e4c252;
+    width: 50%;
+
+}
+
+.input-box
+{
+    width: 70%;
+    margin: 12px 10px;
+    padding: 10px 4px ;
+}
