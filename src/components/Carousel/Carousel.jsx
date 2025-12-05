@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import "./Carousel.css";
 
-function Carousel({ images = [], interval = 3000 }) {
+function Carousel({ images = [], interval }) {
   const [img, setImg] = useState(0);
 
   useEffect(() => {
