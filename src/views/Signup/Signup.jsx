@@ -1,5 +1,6 @@
 import React from 'react'
 import Button from "../../components/Button/Button.jsx"
+import { Link } from 'react-router-dom'
 import './Signup.css'
 
 function Signup() {
@@ -11,7 +12,9 @@ function Signup() {
         <input className='confirm-pasword-input input-box' type="text" placeholder='Confirm Password' />
         <Button text='signup'/>
 
-        
+           <p className="login-text">
+          Already have an account? <Link to="/login">Login</Link>
+        </p>
     </form>
     </div>
   )
