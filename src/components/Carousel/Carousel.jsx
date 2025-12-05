@@ -1,8 +1,14 @@
 import React from 'react'
+import { useState } from 'react'
 
-function Carousel() {
+function Carousel({images}) {
+
+  const [img , setImg] = useState(0);
+
   return (
-    <div>Carousel</div>
+    <div>
+      <p>slide index of current image :{img}</p>
+    </div>
   )
 }
 
