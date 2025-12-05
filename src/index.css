@@ -1,24 +1,30 @@
 
 .forms-container{
-  margin: 60px auto;
-  padding:   auto;
+  margin: 40px auto;
+  padding: 40px 10px;
+  padding:  100px auto;
     display: flex;
-    background-image: url("./assets/images/Coffee-3.jpg");
-      background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+    
   flex-direction: column;
   align-items: center;
     border: 2px solid white;
     border-radius: 10px;
-    background-color:  #e4c252;
     width: 50%;
 
+
+    
+    background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
 }
 
 .input-box
 {
+
+  background-color:  #e4c252;
     width: 70%;
-    margin: 12px 10px;
+    margin: 20px 10px;
     padding: 10px 4px ;
 }

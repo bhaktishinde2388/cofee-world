@@ -1,0 +1,12 @@
+.signup-bg{
+  background-image: url("./../../assets//images/Coffee-6.jpg");
+      background-size: cover;
+  background-position: left;
+  background-repeat: no-repeat;
+    min-height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content:center;
+  align-items: center;
+ 
+}
