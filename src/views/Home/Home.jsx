@@ -21,7 +21,7 @@ function Home() {
       <Navbar />
       
       <Carousel images={carouselImages} interval={4000} />
-      Home
+     
     </>
   )
 }

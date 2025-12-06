@@ -136,7 +136,7 @@ function Products() {
           required
         />
         <input type="text" name="category" placeholder="Product Category" required />
-        <button type="submit">Add Product</button>
+        <Button type="submit" text="Add Product"/>
       </form>
 
 
@@ -193,7 +193,7 @@ function Products() {
             <p><b>Description:</b> {viewProduct.description}</p>
             <p><b>Category:</b> {viewProduct.category}</p>
             <img src={viewProduct.image} alt={viewProduct.title} width="100" />
-            <button onClick={() => setViewProduct(null)}>Close</button>
+            <Button  onClick={() => setViewProduct(null)} text="Close"/>
           </div>
         </div>
       )}
