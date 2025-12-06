@@ -6,7 +6,8 @@
 }
 
 .nav-container {
-  background-color: #d6c079;
+     background: linear-gradient(90deg, #6f4e37 0%, #a67c52 100%);
+  color: #fff;
   display: flex;
   justify-content: space-between;
   align-items: center;

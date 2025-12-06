@@ -3,6 +3,7 @@ import Button from '../../components/Button/Button';
 import axios from 'axios';
 import Modal from '../../components/Modal/Modal';
 import Navbar from '../../components/Navbar/Navbar';
+import useConfirmDelete from '../../hooks/useConfirmDelete';
 import "./Products.css"
 
 function Products() {
@@ -13,6 +14,8 @@ function Products() {
   const [editProduct, setEditProduct] = useState(null);
   const [viewProduct, setViewProduct] = useState(null);
 
+
+   const confirmDelete = useConfirmDelete("CoffeeWorld");
   // Load Products
   useEffect(() => {
     axios
@@ -74,15 +77,15 @@ function Products() {
         alert("Updated");
       });
   };
-
-  // Delete
-  const handleDelete = (id) => {
-    axios.delete(`https://fakestoreapi.com/products/${id}`).then(() => {
-      setProducts(products.filter((p) => p.id !== id));
-      alert("Deleted");
-    });
+//delete...
+ const handleDelete = (id, title) => {
+    if (confirmDelete(title)) {  
+      axios.delete(`https://fakestoreapi.com/products/${id}`).then(() => {
+        setProducts(products.filter((p) => p.id !== id));
+        alert("Deleted");
+      });
+    }
   };
-
   return (
     <div>
       
@@ -152,14 +155,14 @@ function Products() {
               <td>
                 <Button onClick={() => setViewProduct(p)} text="View" />
                 <Button onClick={() => setEditProduct(p)} text="Edit" />
-                <Button onClick={() => handleDelete(p.id)} text="Delete" />
+                <Button onClick={() => handleDelete(p.id, p.title)} text="Delete" />
               </td>
             </tr>
           ))}
         </tbody>
       </table>
 
-      {/* ---------- VIEW MODAL ---------- */}
+      {/* view........... */}
       {viewProduct && (
         <Modal onClose={() => setViewProduct(null)}>
           <h3>Product Details</h3>
@@ -172,7 +175,7 @@ function Products() {
         </Modal>
       )}
 
-      {/* ---------- EDIT MODAL ---------- */}
+      {/* edit........... */}
       {editProduct && (
         <Modal onClose={() => setEditProduct(null)}>
           <h3>Edit Product</h3>

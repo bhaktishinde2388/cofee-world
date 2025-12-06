@@ -9,12 +9,17 @@ import Coffee5 from '../../assets/images/Coffee-5.webp'
 import Coffee6 from '../../assets/images/Coffee-6.jpg'
 import Coffee7 from '../../assets/images/Coffee-7.webp'
 import Coffee8 from '../../assets/images/Coffee-8.webp'
+import Coffee9 from '../../assets/images/Coffee-9.webp'
+import Coffee10 from '../../assets/images/Coffee-10.webp'
+import Coffee11 from '../../assets/images/Coffee-11.webp'
+import Coffee12 from '../../assets/images/Coffee-12.png'
+import Coffee13 from '../../assets/images/Coffee-13.jpg'
 
 import "./Home.css"
 
 function Home() {
 
-  const carouselImages = [Coffee3, Coffee1, Coffee2, Coffee4, Coffee5, Coffee6, Coffee7, Coffee8];
+  const carouselImages = [Coffee3, Coffee1, Coffee2, Coffee4, Coffee5, Coffee6, Coffee7, Coffee8,Coffee9,Coffee10,Coffee11,Coffee12,Coffee13];
 
   return (
     <>

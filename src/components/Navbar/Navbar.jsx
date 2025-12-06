@@ -36,7 +36,7 @@ function Navbar() {
                 marginRight: "10px",
                 fontSize: "20px",
                 fontWeight: "bolder",
-                color: "red",
+                color: "white",
               }}
             >
               {currentUser.name} 👤
