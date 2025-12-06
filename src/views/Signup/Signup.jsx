@@ -9,15 +9,29 @@ function Signup() {
   const [user, setUser] = useState({
     name: "",
     password: "",
-    confirmPassword: "",
+    confirmPassword: "",           
   });
 
   const signupUser = (e) => {
      e.preventDefault(); 
 
     //vaidations
+    //al field validationsss
      if (!user.name || !user.password || !user.confirmPassword) {
       setError("All fields are required!");
+      return;
+    }
+
+    //regex vaidation
+   const usernameRegex = /^[a-zA-Z0-9_]{3,16}$/;
+    if (!usernameRegex.test(user.name)) {
+      setError("Username should be 3-16 characters, letters/numbers only.");
+      return;
+    }
+
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+        if (!passwordRegex.test(user.password)) {
+      setError("Password must include uppercase, lowercase, number & special symbol.");
       return;
     }
 
@@ -25,7 +39,7 @@ function Signup() {
    let existingUsers = JSON.parse(localStorage.getItem("signupUsers")) || [];
    existingUsers.push(user);
    localStorage.setItem("signupUsers", JSON.stringify(existingUsers));
-   
+
 
     console.log("User data stored in localStorage:", user);
   };
