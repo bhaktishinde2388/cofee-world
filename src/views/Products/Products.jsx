@@ -50,37 +50,54 @@ function Products() {
       .catch((err) => console.error("Error adding product:", err));
   };
 
- // Edit Product
-const handleUpdate = (e) => {
-  e.preventDefault();
-  const form = e.target;
+  // Edit Product
+  const handleUpdate = (e) => {
+    e.preventDefault();
+    const form = e.target;
 
-  // Create updated product object
-  const updatedProduct = {
-    title: form.title.value,
-    price: Number(form.price.value),
-    description: form.description.value,
-    category: form.category.value,
-    image: "https://i.pravatar.cc/300",
+    // Create updated product object
+    const updatedProduct = {
+      title: form.title.value,
+      price: Number(form.price.value),
+      description: form.description.value,
+      category: form.category.value,
+      image: "https://i.pravatar.cc/300",
+    };
+
+    // Update product via API
+    axios
+      .put(`https://fakestoreapi.com/products/${editProduct.id}`, updatedProduct)
+      .then((response) => {
+        // Update local state
+        const updatedProducts = products.map((p) =>
+          p.id === editProduct.id ? response.data : p
+        );
+        setProducts(updatedProducts);
+        setEditProduct(null);
+        alert("Product updated!");
+      })
+      .catch((error) => {
+        console.error("Failed to update product:", error);
+        alert("Update failed!");
+      });
   };
 
-  // Update product via API
-  axios
-    .put(`https://fakestoreapi.com/products/${editProduct.id}`, updatedProduct)
-    .then((response) => {
-      // Update local state
-      const updatedProducts = products.map((p) =>
-        p.id === editProduct.id ? response.data : p
-      );
-      setProducts(updatedProducts);
-      setEditProduct(null);
-      alert("Product updated!");
-    })
-    .catch((error) => {
-      console.error("Failed to update product:", error);
-      alert("Update failed!");
-    });
-};
+  // Delete Product..............
+  const handleDelete = (id) => {
+    axios
+      .delete(`https://fakestoreapi.com/products/${id}`)
+      .then(() => {
+        const updatedProducts = products.filter((p) => p.id !== id);
+        setProducts(updatedProducts);
+        alert("Product deleted successfully!");
+      })
+      .catch((err) => {
+        console.error("Error deleting product:", err);
+        alert("Delete failed!");
+      });
+  };
+
+
 
   return (
     <div>
@@ -139,15 +156,15 @@ const handleUpdate = (e) => {
               <td>{p.price}</td>
               <td>{p.description}</td>
               <td>{p.category}</td>
-                 <td>
-                  <Button onClick={() => setEditProduct(p)} text="Edit" />
-               
+              <td>
+                <Button onClick={() => setEditProduct(p)} text="Edit" />
+                <Button onClick={() => handleDelete(p.id)} text="Delete" />
               </td>
             </tr>
           ))}
         </tbody>
       </table>
-   {/* Edit Product Popup */}
+      {/* Edit Product Popup */}
       {editProduct && (
         <div className="popup">
           <div className="popup-box">
@@ -156,9 +173,9 @@ const handleUpdate = (e) => {
               <input type="text" name="title" defaultValue={editProduct.title} required />
               <input type="number" name="price" defaultValue={editProduct.price} required />
               <input type="text" name="description" defaultValue={editProduct.description} required />
-              <input type="text" name="category" defaultValue={editProduct.category} required />
-              <button type="submit">Update</button>
-              <button type="button" onClick={() => setEditProduct(null)}>Cancel</button>
+              <input type="text" name="category" defaultValue={editProduct.category} required />             
+              <Button  type="submit" text="Update" />
+              <Button  type="button" onClick={() => setEditProduct(null)} text="Cancel" />
             </form>
           </div>
         </div>
