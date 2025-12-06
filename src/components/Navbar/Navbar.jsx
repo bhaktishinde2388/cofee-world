@@ -18,17 +18,18 @@ function Navbar() {
   const logout = () => {
     localStorage.removeItem("currentUser");
     setCurrentUser(null);
-    navigate("/login");
+    navigate("/");
   }
   return (
     <div className='nav-container'>
       <div className='logo-container'>
-        <img src={Logo} alt="" />
+        <img src={Logo} alt="logo" />
       </div>
       <div className="btn-container">
         {currentUser ? (
           <div>
             <span style={{ marginRight: "10px",fontSize:"20px",fontWeight:"bolder", color:"red" }}>{currentUser.name}👤</span>
+            <Button text="Create Product" onClick={() => navigate("/products")} />
             <Button text="Logout" onClick={logout} />
           </div>
         ) : (
