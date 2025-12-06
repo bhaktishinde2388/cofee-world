@@ -1,0 +1,27 @@
+input {
+    width: 100%;
+    padding: 10px;
+    margin: 6px 0;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+.inputBox
+{
+     width: 200px;
+  padding: 8px;
+  margin: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+  font-size: 13px;
+  transition: 0.2s ease;
+  background-color: rgb(245, 233, 233);
+}
+.searchbar
+{
+     width: 250px;
+background-color: rgb(229, 201, 201);
+color:black;
+border: 1px solid rgb(61, 50, 43);
+}

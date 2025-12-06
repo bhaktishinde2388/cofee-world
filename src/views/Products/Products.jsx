@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import Button from '../../components/Button/Button';
 import axios from 'axios';
 import Modal from '../../components/Modal/Modal';
+import Navbar from '../../components/Navbar/Navbar';
+import "./Products.css"
 
 function Products() {
   const [products, setProducts] = useState([]);
@@ -83,18 +85,24 @@ function Products() {
 
   return (
     <div>
-      <h2>Products</h2>
-
+      
+<Navbar/>
       {/* Search */}
-      <input
+      <div style={{ display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: "15px",
+    margin: "20px 0" }}>
+      <input 
         type="text"
+        className='inputBox  searchbar'
         placeholder="Search Product..."
         value={searchText}
         onChange={(e) => setSearchText(e.target.value)}
       />
 
       {/* Filter */}
-      <select
+      <select className='inputBox searchbar'
         value={filterDropdown}
         onChange={(e) => setFilterDropdown(e.target.value)}
       >
@@ -105,18 +113,24 @@ function Products() {
           </option>
         ))}
       </select>
-
+</div>
       {/* Add Product */}
-      <form onSubmit={addProduct}>
-        <input type="text" name="title"  placeholder="Title" required />
-        <input type="number" name="price" placeholder="Price" required />
-        <input type="text" name="description" placeholder="Description" required />
-        <input type="text" name="category" placeholder="Category" required />
-        <Button type="submit" text="Add Product" />
+      <form onSubmit={addProduct} style={{  display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: "12px",
+    margin: "20px 0",
+    width: "100%"}}>
+        <input className='inputBox' type="text" name="title"  placeholder="Title" required />
+        <input className='inputBox' type="number" name="price" placeholder="Price" required />
+        <input className='inputBox' type="text" name="description" placeholder="Description" required />
+        <input className='inputBox' type="text" name="category" placeholder="Category" required />
+        <Button className='inputBox' type="submit" text="Add Product" />
       </form>
 
       {/* Products Table */}
-      <table border="1">
+      <table border="1" style={{margin:"20px"}}>
         <thead>
           <tr>
             <th>Title</th>

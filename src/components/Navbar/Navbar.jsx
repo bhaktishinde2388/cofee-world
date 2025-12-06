@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
-import Logo from "../../assets/logo/logo.png"
+import Logo from "../../assets/logo/logo.png";
 import Button from "../Button/Button.jsx";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import "./Navbar.css";
 
 function Navbar() {
   const [currentUser, setCurrentUser] = useState(null);
-  const navigate = useNavigate();  
+  const navigate = useNavigate();
+  const location = useLocation();   // 👈 Get current page
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("currentUser"));
@@ -19,17 +20,44 @@ function Navbar() {
     localStorage.removeItem("currentUser");
     setCurrentUser(null);
     navigate("/");
-  }
+  };
+
   return (
-    <div className='nav-container'>
-      <div className='logo-container'>
+    <div className="nav-container">
+      <div className="logo-container">
         <img src={Logo} alt="logo" />
       </div>
+
       <div className="btn-container">
         {currentUser ? (
           <div>
-            <span style={{ marginRight: "10px",fontSize:"20px",fontWeight:"bolder", color:"red" }}>{currentUser.name}👤</span>
-            <Button text="Create Product" onClick={() => navigate("/products")} />
+            <span
+              style={{
+                marginRight: "10px",
+                fontSize: "20px",
+                fontWeight: "bolder",
+                color: "red",
+              }}
+            >
+              {currentUser.name} 👤
+            </span>
+
+            {/* 👇 Hide Products btn on Products page */}
+            {location.pathname !== "/products" && (
+              <Button
+                text="Products"
+                onClick={() => navigate("/products")}
+              />
+            )}
+
+            {/* 👇 Show Home btn only on Products page */}
+            {location.pathname === "/products" && (
+              <Button
+                text="Home"
+                onClick={() => navigate("/")}
+              />
+            )}
+
             <Button text="Logout" onClick={logout} />
           </div>
         ) : (
@@ -39,9 +67,8 @@ function Navbar() {
           </div>
         )}
       </div>
-
     </div>
-  )
+  );
 }
 
-export default Navbar
+export default Navbar;
