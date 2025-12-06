@@ -7,6 +7,7 @@ function Products() {
   const [searchText, setSearchText] = useState("");
   const [filterDropdown, setFilterDropdown] = useState("");
   const [editProduct, setEditProduct] = useState(null);
+  const [viewProduct, setViewProduct] = useState(null);
 
   //for all products...................
   useEffect(() => {
@@ -157,6 +158,8 @@ function Products() {
               <td>{p.description}</td>
               <td>{p.category}</td>
               <td>
+ 
+                 <Button onClick={() => setViewProduct(p)} text="View" />
                 <Button onClick={() => setEditProduct(p)} text="Edit" />
                 <Button onClick={() => handleDelete(p.id)} text="Delete" />
               </td>
@@ -177,6 +180,20 @@ function Products() {
               <Button  type="submit" text="Update" />
               <Button  type="button" onClick={() => setEditProduct(null)} text="Cancel" />
             </form>
+          </div>
+        </div>
+      )}
+       {/* View Product Popup */}
+      {viewProduct && (
+        <div className="popup">
+          <div className="popup-box">
+            <h3>Product Details</h3>
+            <p><b>Title:</b> {viewProduct.title}</p>
+            <p><b>Price:</b> {viewProduct.price}</p>
+            <p><b>Description:</b> {viewProduct.description}</p>
+            <p><b>Category:</b> {viewProduct.category}</p>
+            <img src={viewProduct.image} alt={viewProduct.title} width="100" />
+            <button onClick={() => setViewProduct(null)}>Close</button>
           </div>
         </div>
       )}
