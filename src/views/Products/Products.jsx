@@ -6,7 +6,9 @@ function Products() {
   const [products, setProducts] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [filterDropdown, setFilterDropdown] = useState("");
+  const [editProduct, setEditProduct] = useState(null);
 
+  //for all products...................
   useEffect(() => {
     axios
       .get("https://fakestoreapi.com/products")
@@ -14,7 +16,7 @@ function Products() {
       .catch((err) => console.error("Error fetching products:", err));
   }, []);
 
-  //for unique category of product
+  //for unique category of product.......
   const categories = [...new Set(products.map((p) => p.category))];
 
   //filter is added............
@@ -25,10 +27,9 @@ function Products() {
       filterDropdown === "" ? true : p.category === filterDropdown
     );
 
-// Add Product
+  // Add Product
   const addProduct = (e) => {
     e.preventDefault();
-
     const form = e.target;
 
     const newProduct = {
@@ -42,14 +43,44 @@ function Products() {
     axios
       .post("https://fakestoreapi.com/products", newProduct)
       .then((res) => {
-        setProducts([...products, res.data]); 
+        setProducts([...products, res.data]);
         form.reset();
         alert("Product added successfully!!!!");
       })
       .catch((err) => console.error("Error adding product:", err));
   };
 
+ // Edit Product
+const handleUpdate = (e) => {
+  e.preventDefault();
+  const form = e.target;
 
+  // Create updated product object
+  const updatedProduct = {
+    title: form.title.value,
+    price: Number(form.price.value),
+    description: form.description.value,
+    category: form.category.value,
+    image: "https://i.pravatar.cc/300",
+  };
+
+  // Update product via API
+  axios
+    .put(`https://fakestoreapi.com/products/${editProduct.id}`, updatedProduct)
+    .then((response) => {
+      // Update local state
+      const updatedProducts = products.map((p) =>
+        p.id === editProduct.id ? response.data : p
+      );
+      setProducts(updatedProducts);
+      setEditProduct(null);
+      alert("Product updated!");
+    })
+    .catch((error) => {
+      console.error("Failed to update product:", error);
+      alert("Update failed!");
+    });
+};
 
   return (
     <div>
@@ -76,7 +107,7 @@ function Products() {
 
 
 
- {/* Add Product Form */}
+      {/* Add Product Form */}
       <form onSubmit={addProduct}>
         <input type="text" name="title" placeholder="Product Title" required />
         <input type="number" name="price" placeholder="Product Price" required />
@@ -108,10 +139,30 @@ function Products() {
               <td>{p.price}</td>
               <td>{p.description}</td>
               <td>{p.category}</td>
+                 <td>
+                  <Button onClick={() => setEditProduct(p)} text="Edit" />
+               
+              </td>
             </tr>
           ))}
         </tbody>
       </table>
+   {/* Edit Product Popup */}
+      {editProduct && (
+        <div className="popup">
+          <div className="popup-box">
+            <h3>Edit Product</h3>
+            <form onSubmit={handleUpdate}>
+              <input type="text" name="title" defaultValue={editProduct.title} required />
+              <input type="number" name="price" defaultValue={editProduct.price} required />
+              <input type="text" name="description" defaultValue={editProduct.description} required />
+              <input type="text" name="category" defaultValue={editProduct.category} required />
+              <button type="submit">Update</button>
+              <button type="button" onClick={() => setEditProduct(null)}>Cancel</button>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
