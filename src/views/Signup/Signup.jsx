@@ -1,11 +1,9 @@
-import React, { useState } from 'react'
-import Button from "../../components/Button/Button.jsx"
-import { Link } from 'react-router-dom'
-import './Signup.css'
-
+import React, { useState } from 'react';
+import Button from "../../components/Button/Button.jsx";
+import { Link, useNavigate } from 'react-router-dom';
+import './Signup.css';
 
 function Signup() {
-
   const [user, setUser] = useState({
     name: "",
     email: "",
@@ -14,18 +12,18 @@ function Signup() {
   });
 
   const [error, setError] = useState("");
+  const navigate = useNavigate(); // For navigation
 
   const signupUser = (e) => {
     e.preventDefault();
 
-    //vaidations
-    //al field validationsss
+    // Validate all fields
     if (!user.name || !user.password || !user.confirmPassword || !user.email) {
       setError("All fields are required!");
       return;
     }
 
-    //regex vaidation
+    // Regex validation
     const usernameRegex = /^[a-zA-Z0-9_]{3,16}$/;
     if (!usernameRegex.test(user.name)) {
       setError("Username should be 3-16 characters, letters/numbers only.");
@@ -45,50 +43,63 @@ function Signup() {
     }
 
     if (user.password !== user.confirmPassword) {
-      setError("Passwords is not match.");
+      setError("Passwords do not match.");
       return;
     }
 
-    //this is for adding multip signups in the localstorage
+    // Check for existing users in localStorage
     let existingUsers = JSON.parse(localStorage.getItem("users")) || [];
-
     const userExists = existingUsers.some((u) => u.email === user.email);
     if (userExists) {
       setError("User already exists! Please login.");
       return;
     }
 
-    //for new user 
+    // Add new user
     existingUsers.push(user);
     localStorage.setItem("users", JSON.stringify(existingUsers));
     setError("");
     alert("Signup Successful!");
 
-    console.log("User data stored in localStorage:", user);
+    navigate("/login");
   };
 
   return (
     <div className='signup-bg'>
       <form className='forms-container'>
-        <input className='usename-input input-box' type="text" placeholder='Enter UserName'
+        <input
+          className='usename-input input-box'
+          type="text"
+          placeholder='Enter UserName'
           value={user.name}
-          onChange={(e) => setUser({ ...user, name: e.target.value })} />
+          onChange={(e) => setUser({ ...user, name: e.target.value })}
+        />
 
-        <input className='password-input input-box' type="text" placeholder='Enter Email'
+        <input
+          className='password-input input-box'
+          type="text"
+          placeholder='Enter Email'
           value={user.email}
-          onChange={(e) => setUser({ ...user, email: e.target.value })} />
+          onChange={(e) => setUser({ ...user, email: e.target.value })}
+        />
 
-        <input className='password-input input-box' type="text" placeholder='Enter Password'
+        <input
+          className='password-input input-box'
+          type="text"
+          placeholder='Enter Password'
           value={user.password}
-          onChange={(e) => setUser({ ...user, password: e.target.value })} />
+          onChange={(e) => setUser({ ...user, password: e.target.value })}
+        />
 
-
-        <input className='confirm-pasword-input input-box' type="text" placeholder='Confirm Password'
+        <input
+          className='confirm-pasword-input input-box'
+          type="text"
+          placeholder='Confirm Password'
           value={user.confirmPassword}
           onChange={(e) => setUser({ ...user, confirmPassword: e.target.value })}
-
         />
-        <Button type="submit" text='signup' onClick={signupUser} />
+
+        <Button type="submit" text='Signup' onClick={signupUser} />
         {error && <p style={{ color: "red", marginTop: "10px" }}>{error}</p>}
 
         <p className="login-text">
@@ -96,7 +107,7 @@ function Signup() {
         </p>
       </form>
     </div>
-  )
+  );
 }
 
-export default Signup
+export default Signup;
