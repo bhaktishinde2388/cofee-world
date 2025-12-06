@@ -7,7 +7,7 @@ import "./Navbar.css";
 function Navbar() {
   const [currentUser, setCurrentUser] = useState(null);
   const navigate = useNavigate();
-  const location = useLocation();   // 👈 Get current page
+  const location = useLocation();   
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("currentUser"));
@@ -42,7 +42,7 @@ function Navbar() {
               {currentUser.name} 👤
             </span>
 
-            {/* 👇 Hide Products btn on Products page */}
+           
             {location.pathname !== "/products" && (
               <Button
                 text="Products"
@@ -50,7 +50,7 @@ function Navbar() {
               />
             )}
 
-            {/* 👇 Show Home btn only on Products page */}
+           
             {location.pathname === "/products" && (
               <Button
                 text="Home"
