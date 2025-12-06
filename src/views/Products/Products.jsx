@@ -4,6 +4,7 @@ import axios from 'axios';
 
 function Products() {
     const [products, setProducts] = useState([]);
+    const [searchText, setSearchText] = useState("");
 
 useEffect(() => {
   axios
@@ -13,10 +14,23 @@ useEffect(() => {
 }, []);
 
 
+//filter is added............
+  const filteredProducts = products.filter((p) =>
+    p.title.toLowerCase().includes(searchText.toLowerCase())
+  );
+
 
   return (
 <div>
       <h2>Products</h2>
+  {/* Search Input............ */}
+      <input
+        type="text"
+        placeholder="Search Product..."
+        value={searchText}
+        onChange={(e) => setSearchText(e.target.value)}
+      />
+
       <table border="1">
         <thead>
           <tr>
@@ -27,7 +41,7 @@ useEffect(() => {
           </tr>
         </thead>
         <tbody>
-          {products.map((p) => (
+          {filteredProducts.map((p) => (
             <tr key={p.id}>
               <td>{p.title}</td>
               <td>{p.price}</td>
