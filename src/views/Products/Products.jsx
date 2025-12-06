@@ -15,7 +15,7 @@ function Products() {
   const [viewProduct, setViewProduct] = useState(null);
 
 
-   const confirmDelete = useConfirmDelete("CoffeeWorld");
+  const confirmDelete = useConfirmDelete("CoffeeWorld");
   // Load Products
   useEffect(() => {
     axios
@@ -77,55 +77,62 @@ function Products() {
         alert("Updated");
       });
   };
-//delete...
- const handleDelete = (id, title) => {
-    if (confirmDelete(title)) {  
+  //delete...
+  const handleDelete = (id, title) => {
+    if (confirmDelete(title)) {
       axios.delete(`https://fakestoreapi.com/products/${id}`).then(() => {
         setProducts(products.filter((p) => p.id !== id));
         alert("Deleted");
       });
     }
   };
+
+
+  
   return (
     <div>
-      
-<Navbar/>
-      {/* Search */}
-      <div style={{ display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    gap: "15px",
-    margin: "20px 0" }}>
-      <input 
-        type="text"
-        className='inputBox  searchbar'
-        placeholder="Search Product..."
-        value={searchText}
-        onChange={(e) => setSearchText(e.target.value)}
-      />
 
-      {/* Filter */}
-      <select className='inputBox searchbar'
-        value={filterDropdown}
-        onChange={(e) => setFilterDropdown(e.target.value)}
-      >
-        <option value="">Filter by Category</option>
-        {categories.map((c, i) => (
-          <option key={i} value={c}>
-            {c}
-          </option>
-        ))}
-      </select>
-</div>
+      <Navbar />
+      {/* Search */}
+      <div style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        gap: "15px",
+        margin: "20px 0"
+      }}>
+        <input
+          type="text"
+          className='inputBox  searchbar'
+          placeholder="Search Product..."
+          value={searchText}
+          onChange={(e) => setSearchText(e.target.value)}
+        />
+
+        {/* Filter */}
+        <select className='inputBox searchbar'
+          value={filterDropdown}
+          onChange={(e) => setFilterDropdown(e.target.value)}
+        >
+          <option value="">Filter by Category</option>
+          {categories.map((c, i) => (
+            <option key={i} value={c}>
+              {c}
+            </option>
+          ))}
+        </select>
+      </div>
       {/* Add Product */}
-      <form onSubmit={addProduct} style={{  display: "flex",
-    flexWrap: "wrap",
-    justifyContent: "center",
-    alignItems: "center",
-    gap: "12px",
-    margin: "20px 0",
-    width: "100%"}}>
-        <input className='inputBox' type="text" name="title"  placeholder="Title" required />
+      <form onSubmit={addProduct} style={{
+        display: "flex",
+        flexWrap: "wrap",
+        justifyContent: "center",
+        alignItems: "center",
+        gap: "12px",
+        margin: "20px 0",
+        width: "100%"
+      }}>
+        <input className='inputBox' type="text" name="title" placeholder="Title" required />
         <input className='inputBox' type="number" name="price" placeholder="Price" required />
         <input className='inputBox' type="text" name="description" placeholder="Description" required />
         <input className='inputBox' type="text" name="category" placeholder="Category" required />
@@ -133,7 +140,7 @@ function Products() {
       </form>
 
       {/* Products Table */}
-      <table border="1" style={{margin:"20px"}}>
+      <table border="1" style={{ margin: "20px" }}>
         <thead>
           <tr>
             <th>Title</th>
@@ -182,7 +189,7 @@ function Products() {
 
           <form onSubmit={handleUpdate}>
             <input type="text" name="title" className='input-box' defaultValue={editProduct.title} required />
-            <input type="number" name="price" className='input-box'defaultValue={editProduct.price} required />
+            <input type="number" name="price" className='input-box' defaultValue={editProduct.price} required />
             <input type="text" name="description" className='input-box' defaultValue={editProduct.description} required />
             <input type="text" name="category" className='input-box' defaultValue={editProduct.category} required />
 

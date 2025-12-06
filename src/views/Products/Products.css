@@ -34,10 +34,16 @@ table {
   font-family: Arial, sans-serif;
   color: 20px;
 }
-
+  tr {
+    background: #fff;
+    margin-bottom: 15px;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  }
 th{
     font-size: 16px;
-    background-color: rgb(236, 203, 120);
+    background-color: rgb(55, 49, 34);
     color: white;
     padding: 10px;
 }
@@ -45,4 +51,24 @@ th{
 td{
      font-size: 14px;
      padding: 10px;
+}
+
+@media (max-width: 768px) {
+  table,
+  thead,
+  tbody,
+  
+  td,
+  tr {
+    display: block;
+  }
+  thead {
+    display: none; 
+  }
+  th{
+    display: block;
+    background-color: rgb(55, 49, 34);
+    color: white;
+   
+}
 }

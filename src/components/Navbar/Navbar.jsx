@@ -29,7 +29,6 @@ function Navbar() {
       <div className="logo-container" onClick={() => navigate("/")}>
         <img src={Logo} alt="logo" />
       </div>
-onClick={() => navigate("/")}
       <div className={`btn-container ${menuOpen ? "open" : ""}`}>
         {currentUser ? (
           <>
