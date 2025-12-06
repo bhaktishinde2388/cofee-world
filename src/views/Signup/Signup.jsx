@@ -12,6 +12,8 @@ function Signup() {
     confirmPassword: "",           
   });
 
+  const [error, setError] = useState("");
+
   const signupUser = (e) => {
      e.preventDefault(); 
 
@@ -44,7 +46,8 @@ function Signup() {
    let existingUsers = JSON.parse(localStorage.getItem("signupUsers")) || [];
    existingUsers.push(user);
    localStorage.setItem("signupUsers", JSON.stringify(existingUsers));
-
+     setError("");
+    alert("Signup Successful!");
 
     console.log("User data stored in localStorage:", user);
   };
@@ -66,6 +69,7 @@ function Signup() {
 
         />
         <Button type="submit" text='signup' onClick={signupUser}/>
+     {error && <p style={{ color: "red", marginTop: "10px" }}>{error}</p>}
 
         <p className="login-text">
           Already have an account? <Link to="/login">Login</Link>
