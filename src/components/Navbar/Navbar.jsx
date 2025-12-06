@@ -1,19 +1,43 @@
+import React, { useState, useEffect } from "react";
 import Logo from "../../assets/logo/logo.png";
 import Button from "../Button/Button.jsx";
 import { useNavigate } from "react-router-dom";
 import "./Navbar.css";
 
 function Navbar() {
- const navigate = useNavigate();
+  const [currentUser, setCurrentUser] = useState(null);
+  const navigate = useNavigate();
 
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("currentUser"));
+    if (user) {
+      setCurrentUser(user);
+    }
+  }, []);
+
+  const logout = () => {
+    localStorage.removeItem("currentUser");
+    setCurrentUser(null);
+    navigate("/login");
+  }
   return (
     <div className='nav-container'>
-     <div className='logo-container'><img src={Logo} alt="" /></div>
-
-     <div className='btn-container'>
-      <Button text="Login" onClick={() => navigate("/login")}/>
-      <Button text="Signup" onClick={() => navigate("/signup")}/>
-     </div>
+      <div className='logo-container'>
+        <img src={Logo} alt="" />
+      </div>
+      <div className="btn-container">
+        {currentUser ? (
+          <div>
+            <span style={{ marginRight: "10px" }}>Hello, {currentUser.name}</span>
+            <Button text="Logout" onClick={logout} />
+          </div>
+        ) : (
+          <div>
+            <Button text="Login" onClick={() => navigate("/login")} />
+            <Button text="Signup" onClick={() => navigate("/signup")} />
+          </div>
+        )}
+      </div>
 
     </div>
   )
