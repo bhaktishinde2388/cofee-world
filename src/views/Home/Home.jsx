@@ -13,26 +13,13 @@ import Coffee8 from '../../assets/images/Coffee-8.webp'
 import "./Home.css"
 
 function Home() {
-  const [currentUser, setCurrentUser] = useState(null);
-  useEffect(() => {
 
-    const user = JSON.parse(localStorage.getItem('currentUser'));
-    if (user) {
-      setCurrentUser(user);
-    }
-  }, []);
   const carouselImages = [Coffee3, Coffee1, Coffee2, Coffee4, Coffee5, Coffee6, Coffee7, Coffee8];
 
   return (
     <>
       <Navbar />
-       <div style={{ padding: '20px' }}>
-      {currentUser ? (
-        <h1>Welcome, {currentUser.name}!</h1>
-      ) : (
-        <h1>Welcome, Guest!</h1>
-      )}
-    </div>
+      
       <Carousel images={carouselImages} interval={4000} />
       Home
     </>
