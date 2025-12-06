@@ -43,9 +43,10 @@ function Signup() {
     }
 
     //this is for adding multip signups in the localstorage
-   let existingUsers = JSON.parse(localStorage.getItem("signupUsers")) || [];
+   let existingUsers = JSON.parse(localStorage.getItem("users")) || [];
+localStorage.setItem("signupUsers", JSON.stringify(existingUsers));
    existingUsers.push(user);
-   localStorage.setItem("signupUsers", JSON.stringify(existingUsers));
+   localStorage.setItem("users", JSON.stringify(existingUsers));
      setError("");
     alert("Signup Successful!");
 
@@ -56,7 +57,7 @@ function Signup() {
     <div className='signup-bg'>
       <form className='forms-container'>
         <input className='usename-input input-box' type="text" placeholder='Enter UserName'
-          value={user.email}
+          value={user.name}
           onChange={(e) => setUser({ ...user, name: e.target.value })} />
 
         <input className='password-input input-box' type="text" placeholder='Enter Password'
