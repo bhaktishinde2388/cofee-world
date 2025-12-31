@@ -101,19 +101,26 @@ function Home() {
       </section>
 
       {/* Modal for Product */}
-      {selectedProduct && (
-        <div className="modal-overlay" onClick={closeModal}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <h3>{selectedProduct.title}</h3>
-            <img src={selectedProduct.img} alt={selectedProduct.title} />
-            <p>Price: {selectedProduct.price}</p>
-            <p>
-              Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Coffee made with love and care!
-            </p>
-            <button onClick={closeModal}>Close</button>
-          </div>
-        </div>
-      )}
+     {/* Modal for Product */}
+{selectedProduct && (
+  <div className="modal-overlay" onClick={closeModal}>
+    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+      <h3>{selectedProduct.title}</h3>
+      <img src={selectedProduct.img} alt={selectedProduct.title} />
+      <p>Price: {selectedProduct.price}</p>
+      <p>
+        Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Coffee made with love and care!
+      </p>
+      <div className="modal-buttons">
+        <button onClick={closeModal}>Close</button>
+        <button onClick={() => alert(`Thank you for buying ${selectedProduct.title}!`)}>
+          Buy Now
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+
 
       <Footer />
     </>
