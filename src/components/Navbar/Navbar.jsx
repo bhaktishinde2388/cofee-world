@@ -6,7 +6,7 @@ import "./Navbar.css";
 
 function Navbar() {
   const [currentUser, setCurrentUser] = useState(null);
-  const [menuOpen, setMenuOpen] = useState(false); //hamburgur..
+  const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -19,7 +19,7 @@ function Navbar() {
     localStorage.removeItem("currentUser");
     setCurrentUser(null);
     navigate("/");
-    setMenuOpen(false); // close menu on logout
+    setMenuOpen(false);
   };
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
@@ -29,19 +29,17 @@ function Navbar() {
       <div className="logo-container" onClick={() => navigate("/")}>
         <img src={Logo} alt="logo" />
       </div>
+
       <div className={`btn-container ${menuOpen ? "open" : ""}`}>
         {currentUser ? (
           <>
             <span className="user-name">{currentUser.name} 👤</span>
-
             {location.pathname !== "/products" && (
               <Button text="Products" onClick={() => {navigate("/products"); setMenuOpen(false)}} />
             )}
-
             {location.pathname === "/products" && (
               <Button text="Home" onClick={() => {navigate("/"); setMenuOpen(false)}} />
             )}
-
             <Button text="Logout" onClick={logout} />
           </>
         ) : (
@@ -52,7 +50,6 @@ function Navbar() {
         )}
       </div>
 
-   
       <div className="hamburger" onClick={toggleMenu}>
         <div className={`bar ${menuOpen ? "open" : ""}`}></div>
         <div className={`bar ${menuOpen ? "open" : ""}`}></div>
