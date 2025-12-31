@@ -9,13 +9,14 @@ import Coffee1 from "../../assets/images/Coffee-3.jpg";
 import Coffee2 from "../../assets/images/Coffee-4.webp";
 import Coffee3 from "../../assets/images/Coffee-13.jpg";
 
+
+
+
 import "./Home.css";
 
 function Home() {
   const navigate = useNavigate();
   const [currentUser, setCurrentUser] = useState(null);
-
-  // Modal state
   const [selectedProduct, setSelectedProduct] = useState(null);
 
   useEffect(() => {
@@ -25,22 +26,22 @@ function Home() {
 
   const carouselImages = [Coffee1, Coffee2, Coffee3];
 
-  // Message cards
+  // Message cards (text-only)
   const messageCards = [
-    { title: "Freshly Brewed", msg: "We serve coffee made from the finest beans, freshly brewed every day.", img: Coffee1 },
-    { title: "Premium Quality", msg: "Only the best quality coffee beans for the perfect cup every time.", img: Coffee2 },
-    { title: "Cozy Atmosphere", msg: "Enjoy your coffee in a relaxing and warm environment.", img: Coffee3 },
-    { title: "Expert Baristas", msg: "Our skilled baristas craft every cup to perfection for the ultimate coffee experience.", img: Coffee1 },
+    { title: "Freshly Brewed", msg: "We serve coffee made from the finest beans, freshly brewed every day." },
+    { title: "Premium Quality", msg: "Only the best quality coffee beans for the perfect cup every time." },
+    { title: "Cozy Atmosphere", msg: "Enjoy your coffee in a relaxing and warm environment." },
+    { title: "Expert Baristas", msg: "Our skilled baristas craft every cup to perfection for the ultimate coffee experience." },
   ];
 
   // Product cards
   const productCards = [
-    { title: "Espresso Delight", price: "$12.99", img: "https://images.unsplash.com/photo-1588776814546-64e60a1e6e5a?auto=format&fit=crop&w=500&q=60" },
+    { title: "Espresso Delight", price: "$12.99", img: "https://images.unsplash.com/photo-1511920170033-f8396924c348?auto=format&fit=crop&w=500&q=60" },
     { title: "Cappuccino Heaven", price: "$14.99", img: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=500&q=60" },
     { title: "Mocha Magic", price: "$13.99", img: "https://images.unsplash.com/photo-1511920170033-f8396924c348?auto=format&fit=crop&w=500&q=60" },
   ];
 
-  // Navigate to Products
+  // Explore Products
   const handleExplore = () => {
     if (currentUser) {
       navigate("/products");
@@ -49,26 +50,34 @@ function Home() {
     }
   };
 
-  // Open modal for product
-  const handleViewProduct = (product) => {
-    setSelectedProduct(product);
-  };
-
-  // Close modal
+  // View Product modal
+  const handleViewProduct = (product) => setSelectedProduct(product);
   const closeModal = () => setSelectedProduct(null);
+
+  // Add to Cart
+  const handleAddToCart = (product) => {
+    if (!currentUser) {
+      alert("Please login to add products to cart!");
+      return;
+    }
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    cart.push(product);
+    localStorage.setItem("cart", JSON.stringify(cart));
+    alert(`${product.title} added to cart!`);
+    closeModal();
+  };
 
   return (
     <>
       <Navbar />
       <Carousel images={carouselImages} interval={4000} />
 
-      {/* Message / Feature Cards */}
+      {/* Why Choose Us? Cards */}
       <section className="cards-section">
         <h2>Why Choose Us?</h2>
         <div className="cards-container message-cards">
           {messageCards.map((card, index) => (
             <div className="card message-card" key={index}>
-              <img src={card.img} alt={card.title} />
               <h3>{card.title}</h3>
               <p>{card.msg}</p>
             </div>
@@ -76,7 +85,7 @@ function Home() {
         </div>
       </section>
 
-      {/* Intro / Welcome Section */}
+      {/* Welcome / Intro Section */}
       <section className="section-card">
         <h2>Welcome to Coffee Lovers</h2>
         <p>
@@ -100,27 +109,23 @@ function Home() {
         </div>
       </section>
 
-      {/* Modal for Product */}
-     {/* Modal for Product */}
-{selectedProduct && (
-  <div className="modal-overlay" onClick={closeModal}>
-    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-      <h3>{selectedProduct.title}</h3>
-      <img src={selectedProduct.img} alt={selectedProduct.title} />
-      <p>Price: {selectedProduct.price}</p>
-      <p>
-        Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Coffee made with love and care!
-      </p>
-      <div className="modal-buttons">
-        <button onClick={closeModal}>Close</button>
-        <button onClick={() => alert(`Thank you for buying ${selectedProduct.title}!`)}>
-          Buy Now
-        </button>
-      </div>
-    </div>
-  </div>
-)}
-
+      {/* Modal */}
+      {selectedProduct && (
+        <div className="modal-overlay" onClick={closeModal}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <h3>{selectedProduct.title}</h3>
+            <img src={selectedProduct.img} alt={selectedProduct.title} />
+            <p>Price: {selectedProduct.price}</p>
+            <p>
+              Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Coffee made with love and care!
+            </p>
+            <div className="modal-buttons">
+              <button onClick={closeModal}>Close</button>
+              <button onClick={() => handleAddToCart(selectedProduct)}>Add to Cart</button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <Footer />
     </>
