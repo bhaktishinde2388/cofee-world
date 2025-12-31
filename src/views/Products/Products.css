@@ -1,74 +1,173 @@
-input {
-    width: 100%;
-    padding: 10px;
-    margin: 6px 0;
-    border-radius: 6px;
-    border: 1px solid #ccc;
+/* Body & Page Styling */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", Arial, sans-serif;
+  background: linear-gradient(135deg, #f5f7fa, #dbeafe, #c7d2fe);
+  background-attachment: fixed;
+  background-size: 200% 200%;
+  animation: gradientFlow 12s ease infinite;
 }
 
-.inputBox
-{
-     width: 200px;
-  padding: 8px;
+@keyframes gradientFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Inputs & Search Bar */
+.inputBox {
+  width: 200px;
+  padding: 10px;
   margin: 10px;
+  border-radius: 10px;
   border: 1px solid #ccc;
-  border-radius: 6px;
   outline: none;
-  font-size: 13px;
-  transition: 0.2s ease;
-  background-color:  #f7f7f7;
-}
-.searchbar
-{
-     width: 250px;
- background-color:  #f7f7f7;
-color:black;
-border: 1px solid rgb(61, 50, 43);
+  font-size: 14px;
+  background-color: #f7f7f7;
+  transition: all 0.3s ease;
 }
 
+.inputBox:focus {
+  border-color: #7eaed1;
+  box-shadow: 0 0 8px rgba(126, 174, 209, 0.4);
+}
 
+.searchbar {
+  width: 250px;
+  background-color: #fff;
+  color: #333;
+  border: 1px solid #7eaed1;
+}
+
+/* Form Styling */
+form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin: 20px 0;
+}
+
+/* Table Styling */
 table {
- 
+  width: 95%;
   margin: 20px auto;
   border-collapse: collapse;
   font-family: Arial, sans-serif;
-  color: 20px;
+  background-color: rgba(255, 255, 255, 0.95);
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
 }
-  tr {
-    background: #fff;
-    margin-bottom: 15px;
-    padding: 10px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+
+th, td {
+  padding: 12px 15px;
+  text-align: center;
+}
+
+th {
+  background-color: #7eaed1;
+  color: #fff;
+  font-size: 16px;
+}
+
+td {
+  font-size: 14px;
+  color: #333;
+}
+
+tr {
+  border-bottom: 1px solid #e0e0e0;
+  transition: background 0.3s ease;
+}
+
+tr:hover {
+  background-color: rgba(126, 174, 209, 0.1);
+}
+
+/* Buttons */
+button, .btn {
+  padding: 8px 18px;
+  border-radius: 25px;
+  border: none;
+  background: #f7c6d9;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+button:hover, .btn:hover {
+  background: #7eaed1;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+}
+
+/* Modal Styling */
+.modal-content {
+  background: #fff;
+  border-radius: 20px;
+  padding: 25px;
+  max-width: 500px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+}
+
+.modal-content img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 15px;
+  margin-bottom: 15px;
+}
+
+.modal-content button {
+  margin: 10px 5px;
+}
+
+/* Responsive */
+@media screen and (max-width: 1024px) {
+  .inputBox, .searchbar {
+    width: 180px;
   }
-th{
-    font-size: 16px;
-    background-color: rgb(55, 49, 34);
-    color: white;
-    padding: 10px;
 }
 
-td{
-     font-size: 14px;
-     padding: 10px;
-}
-
-@media (max-width: 768px) {
-  table,
-  thead,
-  tbody,
-  
-  td,
-  tr {
+@media screen and (max-width: 768px) {
+  table, thead, tbody, tr, td, th {
     display: block;
+    width: 100%;
   }
+
   thead {
-    display: none; 
+    display: none;
   }
-  th{
-    display: block;
-    background-color: rgb(55, 49, 34);
-    color: white;
-   
-}
+
+  tr {
+    margin-bottom: 20px;
+    padding: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    border-radius: 15px;
+  }
+
+  td {
+    text-align: right;
+    padding-left: 50%;
+    position: relative;
+  }
+
+  td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 15px;
+    font-weight: bold;
+    text-transform: capitalize;
+  }
+
+  .inputBox, .searchbar {
+    width: 95%;
+    margin: 10px 0;
+  }
 }
