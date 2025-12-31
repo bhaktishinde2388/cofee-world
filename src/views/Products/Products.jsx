@@ -4,6 +4,7 @@ import axios from 'axios';
 import Modal from '../../components/Modal/Modal';
 import Navbar from '../../components/Navbar/Navbar';
 import useConfirmDelete from '../../hooks/useConfirmDelete';
+import Footer from '../../components/Footer/Footer';
 import "./Products.css"
 
 function Products() {
@@ -198,6 +199,7 @@ function Products() {
           </form>
         </Modal>
       )}
+      <Footer/>
     </div>
   );
 }

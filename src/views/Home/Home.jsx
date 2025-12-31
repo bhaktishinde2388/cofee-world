@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from 'react'
+import Footer from '../../components/Footer/Footer.jsx'
+
+
 import Navbar from '../../components/Navbar/Navbar.jsx'
 import Carousel from '../../components/Carousel/Carousel.jsx'
 import Coffee1 from '../../assets/images/Coffee-1.jpg'
@@ -26,7 +29,7 @@ function Home() {
       <Navbar />
       
       <Carousel images={carouselImages} interval={4000} />
-     
+     <Footer/>
     </>
   )
 }
