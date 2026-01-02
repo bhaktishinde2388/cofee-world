@@ -28,6 +28,14 @@ function Signup() {
       return;
     }
 
+    // Password validation regex
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+
+    if (!passwordRegex.test(user.password)) {
+      setError("Password must be at least 8 characters, include uppercase, lowercase, number, and special character!");
+      return;
+    }
+
     if (user.password !== user.confirmPassword) {
       setError("Passwords do not match!");
       return;
