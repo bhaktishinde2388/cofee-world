@@ -16,56 +16,57 @@ function Products() {
 
   const confirmDelete = useConfirmDelete("CoffeeWorld");
 
-  // 🔐 Current user
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-  const isSeller = currentUser?.role === "seller"; // Only seller sees CRUD
-  const isCustomer = currentUser?.role === "user"; // Customer sees only View
+  const isSeller = currentUser?.role === "seller"; 
+  const isCustomer = currentUser?.role === "user"; 
 
   // Load products from local mock data
   useEffect(() => {
     setProducts(coffeeProducts);
   }, []);
 
-  const categories = [...new Set(products.map(p => p.category))];
+  // Get unique categories (trimmed & normalized)
+  const categories = [...new Set(products.map(p => p.category.trim()))];
 
+  // Filtered products
   const filteredProducts = products
     .filter(p => p.title.toLowerCase().includes(searchText.toLowerCase()))
-    .filter(p => filterDropdown === "" ? true : p.category === filterDropdown);
+    .filter(p => filterDropdown === "" ? true : p.category.trim().toLowerCase() === filterDropdown.toLowerCase());
 
-  // ➕ Add Product (Seller only)
+  // ➕ Add Product
   const addProduct = (e) => {
     e.preventDefault();
     const form = e.target;
     const newProduct = {
       id: products.length + 1,
-      title: form.title.value,
+      title: form.title.value.trim(),
       price: Number(form.price.value),
-      description: form.description.value,
-      category: form.category.value,
-      image: "https://i.pravatar.cc/150?img=5",
+      description: form.description.value.trim(),
+      category: form.category.value.trim(),
+      image: "https://images.unsplash.com/photo-1589308078053-9b9d6f93a7a4?auto=format&fit=crop&w=150&q=80", // Online coffee image
     };
     setProducts([...products, newProduct]);
     form.reset();
     alert("Product Added");
   };
 
-  // ✏️ Update Product (Seller only)
+  // ✏️ Update Product
   const handleUpdate = (e) => {
     e.preventDefault();
     const form = e.target;
     const updatedProduct = {
       ...editProduct,
-      title: form.title.value,
+      title: form.title.value.trim(),
       price: Number(form.price.value),
-      description: form.description.value,
-      category: form.category.value,
+      description: form.description.value.trim(),
+      category: form.category.value.trim(),
     };
     setProducts(products.map(p => p.id === editProduct.id ? updatedProduct : p));
     setEditProduct(null);
     alert("Product Updated");
   };
 
-  // ❌ Delete Product (Seller only)
+  // ❌ Delete Product
   const handleDelete = (id, title) => {
     if (confirmDelete(title)) {
       setProducts(products.filter(p => p.id !== id));
@@ -144,10 +145,10 @@ function Products() {
         <Modal onClose={() => setViewProduct(null)}>
           <h3>Product Details</h3>
           <p><b>Title:</b> {viewProduct.title}</p>
-          <p><b>Price:</b> {viewProduct.price}</p>
+          <p><b>Price:</b> {viewProduct.price} Rs/-</p>
           <p><b>Description:</b> {viewProduct.description}</p>
           <p><b>Category:</b> {viewProduct.category}</p>
-          <img src={viewProduct.image} width="120" />
+          <img src={viewProduct.image} width="120" alt={viewProduct.title} />
           <Button text="Close" onClick={() => setViewProduct(null)} />
         </Modal>
       )}
@@ -156,13 +157,15 @@ function Products() {
       {isSeller && editProduct && (
         <Modal onClose={() => setEditProduct(null)}>
           <h3>Edit Product</h3>
-          <form onSubmit={handleUpdate}>
+          <form onSubmit={handleUpdate} style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
             <input name="title" defaultValue={editProduct.title} required />
             <input name="price" type="number" defaultValue={editProduct.price} required />
             <input name="description" defaultValue={editProduct.description} required />
             <input name="category" defaultValue={editProduct.category} required />
-            <Button type="submit" text="Update" />
-            <Button text="Cancel" onClick={() => setEditProduct(null)} />
+            <div style={{ display: "flex", gap: "10px" }}>
+              <Button type="submit" text="Update" />
+              <Button text="Cancel" onClick={() => setEditProduct(null)} />
+            </div>
           </form>
         </Modal>
       )}
