@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import Button from '../../components/Button/Button';
-import axios from 'axios';
 import Modal from '../../components/Modal/Modal';
 import Navbar from '../../components/Navbar/Navbar';
 import useConfirmDelete from '../../hooks/useConfirmDelete';
 import Footer from '../../components/Footer/Footer';
 import "./Products.css";
+import coffeeProducts from '../../data/mockProducts'; // import local data
 
 function Products() {
   const [products, setProducts] = useState([]);
@@ -21,11 +21,9 @@ function Products() {
   const isSeller = currentUser?.role === "seller"; // Only seller sees CRUD
   const isCustomer = currentUser?.role === "user"; // Customer sees only View
 
-  // Load products from API
+  // Load products from local mock data
   useEffect(() => {
-    axios.get("https://fakestoreapi.com/products")
-      .then(res => setProducts(res.data))
-      .catch(err => console.error("Error:", err));
+    setProducts(coffeeProducts);
   }, []);
 
   const categories = [...new Set(products.map(p => p.category))];
@@ -39,17 +37,16 @@ function Products() {
     e.preventDefault();
     const form = e.target;
     const newProduct = {
+      id: products.length + 1,
       title: form.title.value,
       price: Number(form.price.value),
       description: form.description.value,
       category: form.category.value,
-      image: "https://i.pravatar.cc/300",
+      image: "https://i.pravatar.cc/150?img=5",
     };
-    axios.post("https://fakestoreapi.com/products", newProduct).then(res => {
-      setProducts([...products, res.data]);
-      form.reset();
-      alert("Product Added");
-    });
+    setProducts([...products, newProduct]);
+    form.reset();
+    alert("Product Added");
   };
 
   // ✏️ Update Product (Seller only)
@@ -57,27 +54,22 @@ function Products() {
     e.preventDefault();
     const form = e.target;
     const updatedProduct = {
+      ...editProduct,
       title: form.title.value,
       price: Number(form.price.value),
       description: form.description.value,
       category: form.category.value,
-      image: "https://i.pravatar.cc/300",
     };
-    axios.put(`https://fakestoreapi.com/products/${editProduct.id}`, updatedProduct)
-      .then(res => {
-        setProducts(products.map(p => p.id === editProduct.id ? res.data : p));
-        setEditProduct(null);
-        alert("Product Updated");
-      });
+    setProducts(products.map(p => p.id === editProduct.id ? updatedProduct : p));
+    setEditProduct(null);
+    alert("Product Updated");
   };
 
   // ❌ Delete Product (Seller only)
   const handleDelete = (id, title) => {
     if (confirmDelete(title)) {
-      axios.delete(`https://fakestoreapi.com/products/${id}`).then(() => {
-        setProducts(products.filter(p => p.id !== id));
-        alert("Product Deleted");
-      });
+      setProducts(products.filter(p => p.id !== id));
+      alert("Product Deleted");
     }
   };
 
@@ -130,14 +122,11 @@ function Products() {
           {filteredProducts.map(p => (
             <tr key={p.id}>
               <td>{p.title}</td>
-              <td>{p.price}</td>
+              <td>{p.price} Rs/-</td>
               <td>{p.description}</td>
               <td>{p.category}</td>
               <td>
-                {/* Everyone can view */}
                 <Button text="View" onClick={() => setViewProduct(p)} />
-
-                {/* Only seller can edit/delete */}
                 {isSeller && (
                   <>
                     <Button text="Edit" onClick={() => setEditProduct(p)} />
@@ -163,7 +152,7 @@ function Products() {
         </Modal>
       )}
 
-      {/* Edit Modal (Seller only) */}
+      {/* Edit Modal */}
       {isSeller && editProduct && (
         <Modal onClose={() => setEditProduct(null)}>
           <h3>Edit Product</h3>
