@@ -9,7 +9,12 @@
 
 ## 🚀 Project Overview
 
-CoffeeWorld is a responsive web application for coffee enthusiasts. It allows users to signup/login, explore coffee products, add products to cart, and perform CRUD operations on products. All data is handled via `localStorage` for authentication and cart, and the FakeStore API for product management.
+CoffeeWorld is a responsive web application for coffee enthusiasts. It allows users to **signup/login**, explore coffee products, **add products to cart**, and perform **role-based operations** on products.  
+
+- **Customer role:** Can view coffee products and add them to cart.  
+- **Seller role:** Can view, add, edit, and delete coffee products.  
+
+All data is handled via **localStorage** for authentication, cart, and role management, and **mock coffee data** is used locally to simulate product listings. Prices are displayed in **Indian Rupees (Rs)**, and all images are real coffee images fetched online.
 
 The app is designed with a modern theme, attractive gradients, and responsive UI across all devices.
 
@@ -18,72 +23,90 @@ The app is designed with a modern theme, attractive gradients, and responsive UI
 ## ✅ Features Implemented
 
 ### Landing Page
-- Responsive Navbar (Logo, Login, Signup, Logout)
-- Hamburger menu for mobile view
-- Image carousel showcasing coffee images
-- Intro section: “Why Choose Us?” cards (text-only, attractive, responsive)
-- Welcome section with Explore Products button
+- Responsive Navbar (Logo, Login, Signup, Logout)  
+- Hamburger menu for mobile view  
+- Image carousel showcasing coffee images  
+- Intro section: “Why Choose Us?” cards (text-only, attractive, responsive)  
+- Welcome section with **Explore Products** button  
 
-### Authentication
+### Authentication & Role Management
 - **Signup**
   - Username, Email, Password, Confirm Password validation
   - Regex validations: username, email, strong password
-  - Stores user data in localStorage
-  - Responsive themed form
+  - Stores user data and role in localStorage
+  - Responsive themed form  
 - **Login**
   - Only registered users can log in
-  - Themed Login form with gradient backgrounds
-  - Shows toast notifications for errors and successful login
-  - Navbar updates to show logged-in username and Logout button
+  - Login form shows **username and role**
+  - Navbar updates dynamically to reflect login state
+- **Role-based Functionality**
+  - **Customer:** Can view products, add to cart, search & filter
+  - **Seller:** Can view, add, edit, delete products, search & filter  
+
+---
 
 ### Products Page
-- Protected route: accessible only when logged in
-- **Products Table / Cards**:
-  - Columns: Title, Price, Description, Category
+- **Protected route:** accessible only when logged in
+- **Product Table / Cards**:
+  - Columns: Title, Price (Rs), Description, Category, Action
   - Actions:
-    - **View Product** → Modal with product details
-    - **Edit Product** → Modal with pre-filled form
-    - **Delete Product** → Confirmation before deleting
-  - **Add Product Form**: Adds product via API and updates the UI
-  - **Search & Filter**:
-    - Search bar filters by title
-    - Category dropdown filter
-- **Add to Cart**:
+    - **View Product:** Modal with coffee image, details, and add-to-cart (for customers)
+    - **Edit Product:** Modal with pre-filled form (for sellers only)
+    - **Delete Product:** Confirmation before deleting (for sellers only)
+  - **Add Product Form (Seller only):** Adds coffee product to local mock data
+  - **Search & Filter:**
+    - Search bar filters by coffee title
+    - Category dropdown filter (only coffee category in mock data)
+- **Add to Cart (Customer only):**
   - Button inside product modal
-  - Only visible to logged-in users
-  - Prompts login if user is not logged in
   - Adds product to localStorage cart
-  - Shows alert/toast on adding product
+  - Shows toast/alert on adding product
+
+---
 
 ### UI & UX
-- Themed and gradient-based color scheme across the site
-- Rounded cards, shadows, hover effects
+- Themed and gradient-based color scheme across the site  
+- Rounded cards, shadows, hover effects  
 - Responsive design:
   - Product cards increase in size on mobile
   - Tables convert to card-style on small screens
   - Navbar converts to hamburger menu
-- Modals/popups themed consistently with gradient colors
+- Modals/popups themed consistently with gradient colors  
+
+---
 
 ### Reusable Components
-- **Button**: Themed, rounded buttons with hover effects
-- **Modal**: Themed modal for view/edit product
-- **Navbar**: Responsive with user login state
-- Custom hook: **useConfirmDelete** for delete confirmations
+- **Button:** Themed, rounded buttons with hover effects  
+- **Modal:** Themed modal for view/edit product  
+- **Navbar:** Responsive with login state and role display  
+- **Custom Hook:** `useConfirmDelete` for delete confirmations  
 
 ---
 
 ## 🧰 Tech Stack
 
-- **Frontend**: React (Functional components + Hooks)  
-- **Routing**: React Router  
-- **API**: Axios with FakeStore API (https://fakestoreapi.com/)  
-- **State & Storage**: localStorage for authentication & cart  
-- **Notifications**: React Hot Toast / React Toastify  
-- **Styling**: CSS with responsive design and themed colors  
+- **Frontend:** React (Functional components + Hooks)  
+- **Routing:** React Router  
+- **State & Storage:** localStorage for authentication, cart & roles  
+- **Data:** Local mock coffee products with real coffee images  
+- **Styling:** CSS with responsive design and themed colors  
+- **Notifications:** React Hot Toast / React Toastify  
 
 ---
 
+### 🎯 Role-Based Summary
 
+| Role      | Permissions |
+|-----------|-------------|
+| **Customer** | View coffee products, search/filter, add to cart |
+| **Seller**   | View coffee products, search/filter, add/edit/delete products |
 
+---
 
+### 💻 How to Run
 
+1. Clone the repository:
+
+```bash
+git clone <your-repo-url>
+cd coffee-world
